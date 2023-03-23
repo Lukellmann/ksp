@@ -24,9 +24,7 @@ import com.google.devtools.ksp.processing.impl.ResolverImpl
 import com.google.devtools.ksp.symbol.*
 
 class KSConstructorSyntheticImpl private constructor(val ksClassDeclaration: KSClassDeclaration) :
-    KSFunctionDeclaration,
-    KSDeclaration
-    by ksClassDeclaration {
+    KSFunctionDeclaration {
     companion object : KSObjectCache<KSClassDeclaration, KSConstructorSyntheticImpl>() {
         fun getCached(ksClassDeclaration: KSClassDeclaration) =
             KSConstructorSyntheticImpl.cache.getOrPut(ksClassDeclaration) {
@@ -41,6 +39,10 @@ class KSConstructorSyntheticImpl private constructor(val ksClassDeclaration: KSC
     override val parameters: List<KSValueParameter> = emptyList()
 
     override val functionKind: FunctionKind = FunctionKind.MEMBER
+
+    override val docString: String? get() = ksClassDeclaration.docString
+
+    override val packageName: KSName get() = ksClassDeclaration.packageName
 
     override val qualifiedName: KSName? by lazy {
         KSNameImpl.getCached(ksClassDeclaration.qualifiedName?.asString()?.plus(".<init>") ?: "")

@@ -24,7 +24,7 @@ import com.google.devtools.ksp.toKSModifiers
 import org.jetbrains.kotlin.psi.KtProperty
 import org.jetbrains.kotlin.psi.KtPropertyAccessor
 
-abstract class KSPropertyAccessorImpl(val ktPropertyAccessor: KtPropertyAccessor) : KSPropertyAccessor {
+abstract class KSPropertyAccessorImpl(val ktPropertyAccessor: KtPropertyAccessor) /*: KSPropertyAccessor*/ {
     companion object {
         fun getCached(ktPropertyAccessor: KtPropertyAccessor): KSPropertyAccessor {
             return if (ktPropertyAccessor.isGetter) {
@@ -34,30 +34,30 @@ abstract class KSPropertyAccessorImpl(val ktPropertyAccessor: KtPropertyAccessor
             }
         }
     }
-    override val receiver: KSPropertyDeclaration by lazy {
+    open /*override*/ val receiver: KSPropertyDeclaration by lazy {
         KSPropertyDeclarationImpl.getCached(ktPropertyAccessor.property as KtProperty)
     }
-    override val annotations: Sequence<KSAnnotation> by lazy {
+    open /*override*/ val annotations: Sequence<KSAnnotation> by lazy {
         ktPropertyAccessor.filterUseSiteTargetAnnotations().map { KSAnnotationImpl.getCached(it) }
-            .plus(this.findAnnotationFromUseSiteTarget())
+            .plus((this as KSAnnotated).findAnnotationFromUseSiteTarget())
     }
 
-    override val parent: KSNode? by lazy {
+    open /*override*/ val parent: KSNode? by lazy {
         receiver
     }
 
-    override val location: Location by lazy {
+    open /*override*/ val location: Location by lazy {
         ktPropertyAccessor.toLocation()
     }
 
-    override val modifiers: Set<Modifier> by lazy {
+    open /*override*/ val modifiers: Set<Modifier> by lazy {
         ktPropertyAccessor.toKSModifiers()
     }
 
-    override val origin: Origin = Origin.KOTLIN
+    open /*override*/ val origin: Origin = Origin.KOTLIN
 
-    override fun <D, R> accept(visitor: KSVisitor<D, R>, data: D): R {
-        return visitor.visitPropertyAccessor(this, data)
+    open /*override*/ fun <D, R> accept(visitor: KSVisitor<D, R>, data: D): R {
+        return visitor.visitPropertyAccessor(this as KSPropertyAccessor, data)
     }
 
     internal val originalAnnotations: List<KSAnnotation> by lazy {

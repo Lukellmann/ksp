@@ -36,24 +36,24 @@ import org.jetbrains.kotlin.analysis.api.symbols.KtPropertySymbol
 import org.jetbrains.kotlin.analysis.api.symbols.markers.KtNamedSymbol
 import org.jetbrains.kotlin.psi.KtModifierListOwner
 
-abstract class AbstractKSDeclarationImpl(val ktDeclarationSymbol: KtDeclarationSymbol) : KSDeclaration {
-    override val origin: Origin by lazy {
+abstract class AbstractKSDeclarationImpl(val ktDeclarationSymbol: KtDeclarationSymbol) /*: KSDeclaration*/ {
+    open /*override*/ val origin: Origin by lazy {
         mapAAOrigin(ktDeclarationSymbol)
     }
 
-    override val location: Location by lazy {
+    open /*override*/ val location: Location by lazy {
         ktDeclarationSymbol.psi.toLocation()
     }
 
-    override val simpleName: KSName by lazy {
+    open /*override*/ val simpleName: KSName by lazy {
         KSNameImpl.getCached((ktDeclarationSymbol as? KtNamedSymbol)?.name?.asString() ?: "")
     }
 
-    override val annotations: Sequence<KSAnnotation> by lazy {
+    open /*override*/ val annotations: Sequence<KSAnnotation> by lazy {
         originalAnnotations
     }
 
-    override val modifiers: Set<Modifier> by lazy {
+    open /*override*/ val modifiers: Set<Modifier> by lazy {
         when (val psi = ktDeclarationSymbol.psi) {
             is KtModifierListOwner -> psi.toKSModifiers()
             is PsiModifierListOwner -> psi.toKSModifiers()
@@ -67,24 +67,24 @@ abstract class AbstractKSDeclarationImpl(val ktDeclarationSymbol: KtDeclarationS
         }
     }
 
-    override val containingFile: KSFile? by lazy {
+    open /*override*/ val containingFile: KSFile? by lazy {
         ktDeclarationSymbol.toContainingFile()
     }
 
-    override val packageName: KSName by lazy {
+    open /*override*/ val packageName: KSName by lazy {
         ((containingFile?.packageName ?: ktDeclarationSymbol.getContainingKSSymbol()?.packageName)?.asString() ?: "")
             .let { KSNameImpl.getCached(it) }
     }
 
-    override val typeParameters: List<KSTypeParameter> by lazy {
+    open /*override*/ val typeParameters: List<KSTypeParameter> by lazy {
         ktDeclarationSymbol.typeParameters.map { KSTypeParameterImpl.getCached(it) }
     }
 
-    override val parentDeclaration: KSDeclaration? by lazy {
+    open /*override*/ val parentDeclaration: KSDeclaration? by lazy {
         parent as? KSDeclaration
     }
 
-    override val parent: KSNode? by lazy {
+    open /*override*/ val parent: KSNode? by lazy {
         analyze {
             ktDeclarationSymbol.getContainingSymbol()?.let {
                 KSClassDeclarationImpl.getCached(it as KtNamedClassOrObjectSymbol)
@@ -96,7 +96,7 @@ abstract class AbstractKSDeclarationImpl(val ktDeclarationSymbol: KtDeclarationS
         return simpleName.asString()
     }
 
-    override val docString: String?
+    open /*override*/ val docString: String?
         get() = ktDeclarationSymbol.toDocString()
 
     internal val originalAnnotations = ktDeclarationSymbol.annotations()
