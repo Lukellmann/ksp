@@ -17,27 +17,27 @@
 package com.google.devtools.ksp.symbol
 
 import com.google.devtools.ksp.VISIT_SEALED_TYPES_DEPRECATION_MESSAGE
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 
 /**
  * A visitor for program elements
  */
 interface KSVisitor<D, R> {
-    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = WARNING)
+    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = ERROR)
     fun visitNode(node: KSNode, data: D): R
 
-    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = WARNING)
+    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = ERROR)
     fun visitAnnotated(annotated: KSAnnotated, data: D): R
 
     fun visitAnnotation(annotation: KSAnnotation, data: D): R
 
-    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = WARNING)
+    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = ERROR)
     fun visitModifierListOwner(modifierListOwner: KSModifierListOwner, data: D): R
 
-    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = WARNING)
+    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = ERROR)
     fun visitDeclaration(declaration: KSDeclaration, data: D): R
 
-    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = WARNING)
+    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = ERROR)
     fun visitDeclarationContainer(declarationContainer: KSDeclarationContainer, data: D): R
 
     fun visitDynamicReference(reference: KSDynamicReference, data: D): R
@@ -52,14 +52,14 @@ interface KSVisitor<D, R> {
 
     fun visitPropertyDeclaration(property: KSPropertyDeclaration, data: D): R
 
-    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = WARNING)
+    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = ERROR)
     fun visitPropertyAccessor(accessor: KSPropertyAccessor, data: D): R
 
     fun visitPropertyGetter(getter: KSPropertyGetter, data: D): R
 
     fun visitPropertySetter(setter: KSPropertySetter, data: D): R
 
-    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = WARNING)
+    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = ERROR)
     fun visitReferenceElement(element: KSReferenceElement, data: D): R
 
     fun visitTypeAlias(typeAlias: KSTypeAlias, data: D): R
