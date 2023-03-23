@@ -33,13 +33,13 @@ import com.google.devtools.ksp.symbol.KSVisitorVoid
 class CollectAnnotatedSymbolsVisitor(private val inDepth: Boolean) : KSVisitorVoid() {
     val symbols = arrayListOf<KSAnnotated>()
 
-    override fun visitAnnotated(annotated: KSAnnotated, data: Unit) {
+    private fun visitAnnotated(annotated: KSAnnotated) {
         if (annotated.annotations.any())
             symbols.add(annotated)
     }
 
     override fun visitFile(file: KSFile, data: Unit) {
-        visitAnnotated(file, data)
+        visitAnnotated(file)
         file.declarations.forEach { it.accept(this, data) }
     }
 
@@ -49,22 +49,22 @@ class CollectAnnotatedSymbolsVisitor(private val inDepth: Boolean) : KSVisitorVo
     }
 
     override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
-        visitAnnotated(classDeclaration, data)
+        visitAnnotated(classDeclaration)
         classDeclaration.typeParameters.forEach { it.accept(this, data) }
         classDeclaration.declarations.forEach { it.accept(this, data) }
     }
 
     override fun visitPropertyGetter(getter: KSPropertyGetter, data: Unit) {
-        visitAnnotated(getter, data)
+        visitAnnotated(getter)
     }
 
     override fun visitPropertySetter(setter: KSPropertySetter, data: Unit) {
         setter.parameter.accept(this, data)
-        visitAnnotated(setter, data)
+        visitAnnotated(setter)
     }
 
     override fun visitFunctionDeclaration(function: KSFunctionDeclaration, data: Unit) {
-        visitAnnotated(function, data)
+        visitAnnotated(function)
         function.typeParameters.forEach { it.accept(this, data) }
         function.parameters.forEach { it.accept(this, data) }
         if (inDepth) {
@@ -73,18 +73,18 @@ class CollectAnnotatedSymbolsVisitor(private val inDepth: Boolean) : KSVisitorVo
     }
 
     override fun visitPropertyDeclaration(property: KSPropertyDeclaration, data: Unit) {
-        visitAnnotated(property, data)
+        visitAnnotated(property)
         property.typeParameters.forEach { it.accept(this, data) }
         property.getter?.accept(this, data)
         property.setter?.accept(this, data)
     }
 
     override fun visitTypeParameter(typeParameter: KSTypeParameter, data: Unit) {
-        visitAnnotated(typeParameter, data)
+        visitAnnotated(typeParameter)
         super.visitTypeParameter(typeParameter, data)
     }
 
     override fun visitValueParameter(valueParameter: KSValueParameter, data: Unit) {
-        visitAnnotated(valueParameter, data)
+        visitAnnotated(valueParameter)
     }
 }

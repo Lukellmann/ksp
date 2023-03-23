@@ -16,7 +16,9 @@
  */
 package com.google.devtools.ksp.visitor
 
+import com.google.devtools.ksp.VISIT_SEALED_TYPES_DEPRECATION_MESSAGE
 import com.google.devtools.ksp.symbol.*
+import kotlin.DeprecationLevel.WARNING
 
 /**
  * A visitor that methods fall back to [defaultHandler] if not overridden.
@@ -24,10 +26,12 @@ import com.google.devtools.ksp.symbol.*
 abstract class KSEmptyVisitor<D, R> : KSVisitor<D, R> {
     abstract fun defaultHandler(node: KSNode, data: D): R
 
+    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = WARNING)
     override fun visitNode(node: KSNode, data: D): R {
         return defaultHandler(node, data)
     }
 
+    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = WARNING)
     override fun visitAnnotated(annotated: KSAnnotated, data: D): R {
         return defaultHandler(annotated, data)
     }
@@ -36,14 +40,17 @@ abstract class KSEmptyVisitor<D, R> : KSVisitor<D, R> {
         return defaultHandler(annotation, data)
     }
 
+    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = WARNING)
     override fun visitModifierListOwner(modifierListOwner: KSModifierListOwner, data: D): R {
         return defaultHandler(modifierListOwner, data)
     }
 
+    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = WARNING)
     override fun visitDeclaration(declaration: KSDeclaration, data: D): R {
         return defaultHandler(declaration, data)
     }
 
+    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = WARNING)
     override fun visitDeclarationContainer(declarationContainer: KSDeclarationContainer, data: D): R {
         return defaultHandler(declarationContainer, data)
     }
@@ -72,6 +79,7 @@ abstract class KSEmptyVisitor<D, R> : KSVisitor<D, R> {
         return defaultHandler(property, data)
     }
 
+    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = WARNING)
     override fun visitPropertyAccessor(accessor: KSPropertyAccessor, data: D): R {
         return defaultHandler(accessor, data)
     }
@@ -92,6 +100,7 @@ abstract class KSEmptyVisitor<D, R> : KSVisitor<D, R> {
         return defaultHandler(reference, data)
     }
 
+    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = WARNING)
     override fun visitReferenceElement(element: KSReferenceElement, data: D): R {
         return defaultHandler(element, data)
     }

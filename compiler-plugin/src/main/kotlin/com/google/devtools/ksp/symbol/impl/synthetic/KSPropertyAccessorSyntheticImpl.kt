@@ -34,8 +34,4 @@ abstract class KSPropertyAccessorSyntheticImpl(ksPropertyDeclaration: KSProperty
     open /*override*/ val origin: Origin get() = Origin.SYNTHETIC
 
     open /*override*/ val receiver: KSPropertyDeclaration = ksPropertyDeclaration
-
-    open /*override*/ fun <D, R> accept(visitor: KSVisitor<D, R>, data: D): R {
-        return visitor.visitPropertyAccessor(this as KSPropertyAccessor, data)
-    }
 }

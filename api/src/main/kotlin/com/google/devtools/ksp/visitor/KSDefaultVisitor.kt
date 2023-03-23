@@ -21,6 +21,10 @@ import com.google.devtools.ksp.symbol.*
 /**
  * A visitor that delegates to super types for methods that are not overridden.
  */
+// needed until deprecated methods in supertype are removed, this is because these methods should not be deprecated in
+// this class (they are needed here), when the methods in supertype are removed, the override modifiers have to be
+// removed too
+@Suppress("OVERRIDE_DEPRECATION")
 abstract class KSDefaultVisitor<D, R> : KSEmptyVisitor<D, R>() {
     override fun visitDynamicReference(reference: KSDynamicReference, data: D): R {
         this.visitReferenceElement(reference, data)
@@ -57,7 +61,7 @@ abstract class KSDefaultVisitor<D, R> : KSEmptyVisitor<D, R>() {
     override fun visitPropertyAccessor(accessor: KSPropertyAccessor, data: D): R {
         this.visitModifierListOwner(accessor, data)
         this.visitAnnotated(accessor, data)
-        return super.visitPropertyAccessor(accessor, data)
+        return defaultHandler(accessor, data)
     }
 
     override fun visitPropertyGetter(getter: KSPropertyGetter, data: D): R {
@@ -120,12 +124,12 @@ abstract class KSDefaultVisitor<D, R> : KSEmptyVisitor<D, R>() {
     override fun visitDeclaration(declaration: KSDeclaration, data: D): R {
         this.visitAnnotated(declaration, data)
         this.visitModifierListOwner(declaration, data)
-        return super.visitDeclaration(declaration, data)
+        return defaultHandler(declaration, data)
     }
 
     override fun visitAnnotated(annotated: KSAnnotated, data: D): R {
         this.visitNode(annotated, data)
-        return super.visitAnnotated(annotated, data)
+        return defaultHandler(annotated, data)
     }
 
     override fun visitAnnotation(annotation: KSAnnotation, data: D): R {
@@ -135,16 +139,20 @@ abstract class KSDefaultVisitor<D, R> : KSEmptyVisitor<D, R>() {
 
     override fun visitDeclarationContainer(declarationContainer: KSDeclarationContainer, data: D): R {
         this.visitNode(declarationContainer, data)
-        return super.visitDeclarationContainer(declarationContainer, data)
+        return defaultHandler(declarationContainer, data)
     }
 
     override fun visitModifierListOwner(modifierListOwner: KSModifierListOwner, data: D): R {
         this.visitNode(modifierListOwner, data)
-        return super.visitModifierListOwner(modifierListOwner, data)
+        return defaultHandler(modifierListOwner, data)
     }
 
     override fun visitReferenceElement(element: KSReferenceElement, data: D): R {
         this.visitNode(element, data)
-        return super.visitReferenceElement(element, data)
+        return defaultHandler(element, data)
+    }
+
+    override fun visitNode(node: KSNode, data: D): R {
+        return defaultHandler(node, data)
     }
 }
