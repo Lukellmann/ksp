@@ -16,34 +16,12 @@
  */
 package com.google.devtools.ksp.symbol
 
-import com.google.devtools.ksp.VISIT_SEALED_TYPES_DEPRECATION_MESSAGE
-import kotlin.DeprecationLevel.HIDDEN
-
 /**
  * A visitor that doesn't pass or return anything.
  */
 open class KSVisitorVoid : KSVisitor<Unit, Unit> {
-    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = HIDDEN)
-    override fun visitNode(node: KSNode, data: Unit) {
-    }
-
-    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = HIDDEN)
-    override fun visitAnnotated(annotated: KSAnnotated, data: Unit) {
-    }
 
     override fun visitAnnotation(annotation: KSAnnotation, data: Unit) {
-    }
-
-    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = HIDDEN)
-    override fun visitModifierListOwner(modifierListOwner: KSModifierListOwner, data: Unit) {
-    }
-
-    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = HIDDEN)
-    override fun visitDeclaration(declaration: KSDeclaration, data: Unit) {
-    }
-
-    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = HIDDEN)
-    override fun visitDeclarationContainer(declarationContainer: KSDeclarationContainer, data: Unit) {
     }
 
     override fun visitDynamicReference(reference: KSDynamicReference, data: Unit) {
@@ -64,10 +42,6 @@ open class KSVisitorVoid : KSVisitor<Unit, Unit> {
     override fun visitPropertyDeclaration(property: KSPropertyDeclaration, data: Unit) {
     }
 
-    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = HIDDEN)
-    override fun visitPropertyAccessor(accessor: KSPropertyAccessor, data: Unit) {
-    }
-
     override fun visitPropertyGetter(getter: KSPropertyGetter, data: Unit) {
     }
 
@@ -75,10 +49,6 @@ open class KSVisitorVoid : KSVisitor<Unit, Unit> {
     }
 
     override fun visitClassifierReference(reference: KSClassifierReference, data: Unit) {
-    }
-
-    @Deprecated(VISIT_SEALED_TYPES_DEPRECATION_MESSAGE, level = HIDDEN)
-    override fun visitReferenceElement(element: KSReferenceElement, data: Unit) {
     }
 
     override fun visitTypeAlias(typeAlias: KSTypeAlias, data: Unit) {

@@ -530,6 +530,3 @@ fun KSValueArgument.isDefault() = origin == Origin.SYNTHETIC
 
 @KspExperimental
 private fun Any.asArray(method: Method, proxyClass: Class<*>) = listOf(this).asArray(method, proxyClass)
-
-internal const val VISIT_SEALED_TYPES_DEPRECATION_MESSAGE =
-    "This function is never called when using KSNode.accept(visitor, data) as the type of the visited node is sealed."
